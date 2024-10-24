@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Guia_programacion.Models
 {
+    [Serializable]
     internal class Persona:IComparable
     {
         public Persona(int dni, string nombre)

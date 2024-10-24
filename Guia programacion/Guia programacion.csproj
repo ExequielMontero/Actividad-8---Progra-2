@@ -54,8 +54,6 @@
     </Compile>
     <Compile Include="Models\Banco.cs" />
     <Compile Include="Models\Cuenta.cs" />
-    <Compile Include="Models\IDni.cs" />
-    <Compile Include="Models\INumero.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

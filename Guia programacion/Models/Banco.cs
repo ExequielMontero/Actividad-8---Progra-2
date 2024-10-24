@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Guia_programacion.Models
 {
+        [Serializable]
     internal class Banco
     {
         public int CantidadClientes { get; set; }
         public int CantidadCuentas { get; set; }
         List<Cuenta> cuentas = new List<Cuenta>();
         List<Persona> clientes = new List<Persona>();
+        public bool bandera;
 
         public Cuenta this[int idx]
         {
@@ -19,7 +22,7 @@ namespace Guia_programacion.Models
             {
                 if (idx > cuentas.Count)
                 {
-                    throw new Exception();
+                    throw new Exception("Indice de cuenta no existente");
                 }
                 return cuentas[idx];
             }
@@ -28,24 +31,25 @@ namespace Guia_programacion.Models
 
         public Cuenta AgregarCuenta(int numerocuenta, int dni, string nombre)
         {
-            Cuenta actual=null;
-            Persona persona=null;
-            if ((VerClientePorDni(dni) == null))
+            bandera = false;
+            Cuenta actual = null;
+            Persona persona = null;
+            persona = VerClientePorDni(dni);
+            actual = VerCuentaPorNumero(numerocuenta);
+            if (actual == null)
             {
-                persona = new Persona(dni, nombre);
-            }
-            else
-            {
-                throw new IDni();
-            }
+                if (persona == null)
+                {
+                    persona = new Persona(dni, nombre);
+                }
 
-            if (VerCuentaPorNumero(numerocuenta) == null)
-            {
                 actual = new Cuenta(numerocuenta, persona);
+                cuentas.Add(actual);
+                CantidadCuentas++;
             }
             else
             {
-                throw new INumero();
+                bandera = true;
             }
 
             return actual;
@@ -55,9 +59,9 @@ namespace Guia_programacion.Models
         public Cuenta VerCuentaPorNumero(int numeroCuenta)
         {
             cuentas.Sort();
-            Cuenta nueva = new Cuenta(numeroCuenta, new Persona(0,""));
+            Cuenta nueva = new Cuenta(numeroCuenta, null);
             int idx = cuentas.BinarySearch(nueva);
-            if(idx >= 0)
+            if (idx >= 0)
             {
                 return cuentas[idx];
             }

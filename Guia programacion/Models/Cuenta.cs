@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Guia_programacion.Models
 {
-    internal class Cuenta:IComparable
+        [Serializable]
+    internal class Cuenta : IComparable
     {
         public Cuenta(int numero, Persona persona)
         {
@@ -22,15 +23,20 @@ namespace Guia_programacion.Models
             Persona = persona;
         }
 
-        public int Numero {  get; set; }
+        public int Numero { get; set; }
         public double Saldo { get; set; }
         public DateTime Fecha { get; set; }
 
-       public Persona Persona { get; set; }
+        public Persona Persona { get; set; }
 
         public int CompareTo(object obj)
         {
-            return this.Numero.CompareTo(Numero);
+            Cuenta actual = obj as Cuenta;
+            if (actual != null)
+            {
+                return this.Numero.CompareTo(actual.Numero);
+            }
+            return 1;
         }
 
 
